@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/alawyer_logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>alawyer 智能法律顾问平台</title>
+    <script>
+      (function () {
+        var t = localStorage.getItem("alawyer-theme");
+        if (t === "dark") document.documentElement.classList.add("dark");
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

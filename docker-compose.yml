@@ -1,0 +1,77 @@
+﻿# =====================================================================
+# alawyer 法律顾问平台 - 基础设施编排
+# 包含: MySQL 8.0 (业务存储) + Redis 7 (缓存) + Neo4j 5 (知识图谱)
+# Ollama 运行于宿主机 (11434)，Rerank 服务已由 my-rerank 容器提供 (9999)
+# 启动: docker compose up -d
+# 停止: docker compose down
+# =====================================================================
+services:
+  mysql:
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/mysql:8.0
+    container_name: alawyer-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "alawyer123"
+      MYSQL_DATABASE: alawyer_db
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+      TZ: Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"   # 宿主机 3306 已被占用，映射到 3307
+    volumes:
+      - alawyer_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-palawyer123"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - alawyer-net
+
+  redis:
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/redis:7-alpine
+    container_name: alawyer-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - alawyer_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - alawyer-net
+
+  neo4j:
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/neo4j:5-community
+    container_name: alawyer-neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: neo4j/alawyer12345
+      NEO4J_server_memory_heap_max__size: 1G
+      NEO4J_server_memory_pagecache_size: 512M
+      TZ: Asia/Shanghai
+    ports:
+      - "7474:7474"   # HTTP (Neo4j Browser)
+      - "7687:7687"   # Bolt
+    volumes:
+      - alawyer_neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q http://localhost:7474 -O /dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - alawyer-net
+
+volumes:
+  alawyer_mysql_data:
+  alawyer_redis_data:
+  alawyer_neo4j_data:
+
+networks:
+  alawyer-net:
+    driver: bridge

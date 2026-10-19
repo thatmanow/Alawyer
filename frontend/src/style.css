@@ -1,0 +1,120 @@
+:root {
+  --al-navy: #10233f;
+  --al-navy-2: #1b3a63;
+  --al-gold: #c9a55c;
+  --al-gold-2: #e3c88f;
+  --al-bg: #f4f6fa;
+  --al-card: #ffffff;
+  --al-text: #24303f;
+  --al-text-sub: #6b7787;
+  --al-border: #e4e9f2;
+  --al-primary: #1b3a63;
+}
+
+html.dark {
+  --al-bg: #0d1420;
+  --al-card: #16202f;
+  --al-text: #e6ebf2;
+  --al-text-sub: #93a0b4;
+  --al-border: #273449;
+  --al-primary: #3a6db3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  background: var(--al-bg);
+  color: var(--al-text);
+}
+
+.serif {
+  font-family: "Georgia", "STZhongsong", "SimSun", serif;
+}
+
+.page-card {
+  background: var(--al-card);
+  border: 1px solid var(--al-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.md-body {
+  line-height: 1.75;
+  font-size: 14.5px;
+  word-break: break-word;
+}
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4 {
+  margin: 14px 0 8px;
+  color: var(--al-text);
+  font-weight: 600;
+}
+.md-body h1 { font-size: 20px; border-bottom: 1px solid var(--al-border); padding-bottom: 6px; }
+.md-body h2 { font-size: 17px; }
+.md-body h3 { font-size: 15.5px; }
+.md-body h4 { font-size: 14.5px; }
+.md-body p { margin: 8px 0; }
+.md-body ul,
+.md-body ol { padding-left: 22px; margin: 8px 0; }
+.md-body li { margin: 4px 0; }
+.md-body strong { color: var(--al-gold); font-weight: 700; }
+.md-body blockquote {
+  margin: 10px 0;
+  padding: 8px 14px;
+  border-left: 3px solid var(--al-gold);
+  background: rgba(201, 165, 92, 0.08);
+  border-radius: 0 8px 8px 0;
+}
+.md-body code {
+  background: rgba(128, 128, 128, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: Consolas, monospace;
+  font-size: 13px;
+}
+.md-body pre {
+  background: #0d1420;
+  color: #e6ebf2;
+  padding: 14px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+.md-body pre code {
+  background: transparent;
+  padding: 0;
+}
+.md-body table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  width: 100%;
+}
+.md-body th,
+.md-body td {
+  border: 1px solid var(--al-border);
+  padding: 7px 12px;
+  text-align: left;
+}
+.md-body th { background: rgba(128, 128, 128, 0.08); }
+.md-body a { color: var(--al-primary); }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 140, 160, 0.35);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
